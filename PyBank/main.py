@@ -34,25 +34,42 @@ with open(csvpath) as csvfile:
 #Define row count and dollar value baseline values
     rowcount=0    
     TotalDollars=0
-    
+    Change=0
+
 #Read every row of data after the header to find the total months and dollars
     for row in (budget_data):
         Date.append(row[0])
-        Profit.append(row[1])
+        Profit.append(int(row[1]))
         rowcount+=1
         TotalDollars+= int(row[1])
-        PChange=int(Profit[1])-int(Profit[0])
-        ProfitChange.append(str(PChange))
+        #ProfitChange.append((int(row[1]+1)-(row[1])))
+
     print("Total Months: " + str(rowcount))
     print("Total:" + str(TotalDollars))
     
-#Create function to find the average change
-def average(ProfitChange) :
-    length=len(ProfitChange)
-    total=0
-    for change in ProfitChange:
-        total+=change
-    return total/length
+#Use the values from the new profit list to find the change from month to month
+    Change=[Profit[i+1]-Profit[i] for i in range (len(Profit)-1)]
+    
+#add the changes to profit change list
+    ProfitChange.append(Change)
+  
+ 
+#find the average change
+    length=0
+    #for j in ProfitChange:
+        #length= length +1
+    #print(length)
+    #Average=sum(ProfitChange)/len(ProfitChange)
+    #print("The total Annual Profit Change is" + Average)
 
+#Find the greatest increase in the list
+    MaxIncrease=[ProfitChange[i+1]+ProfitChange[i] for i in range (len(ProfitChange)-1)]
 
+    print(f"The Greatest Increase is :{ MaxIncrease}")
 
+#Find the greatest decrease
+    MinChange=ProfitChange[0]
+    for i in ProfitChange:
+        if i < MinChange:
+            i=MinChange
+    print(f"The Greatest decrease in : ({MinChange})")
