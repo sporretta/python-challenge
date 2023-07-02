@@ -96,3 +96,7 @@ elif Name2_Count>Name3_Count:
 elif Name3_Count>Name2_Count:
     print("Winner: " + Names[2])    
 print("------"*10)     
+
+
+#Write output to text file
+cleaned_list=list(zip)

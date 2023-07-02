@@ -30,7 +30,7 @@ with open(csvpath) as csvfile:
  #Set lists to hold data from csv
     Date=[]
     Profit=[]  
-    ProfitChange=[]
+
 #Define row count and dollar value baseline values
     rowcount=0    
     TotalDollars=0
@@ -42,34 +42,38 @@ with open(csvpath) as csvfile:
         Profit.append(int(row[1]))
         rowcount+=1
         TotalDollars+= int(row[1])
-        #ProfitChange.append((int(row[1]+1)-(row[1])))
-
+   
+    
     print("Total Months: " + str(rowcount))
-    print("Total:" + str(TotalDollars))
+    print("Total: $" + str(TotalDollars))
     
 #Use the values from the new profit list to find the change from month to month
-    Change=[Profit[i+1]-Profit[i] for i in range (len(Profit)-1)]
+    Change=[Profit[i+1]- Profit[i] for i in range (len(Profit)-1)]
     
-#add the changes to profit change list
-    ProfitChange.append(Change)
-  
+    Date_Change=[Date[i+1] for i in range(len(Date)-2)]
+    combined=[[Date_Change],[Change]]
  
 #find the average change
     length=0
-    #for j in ProfitChange:
-        #length= length +1
-    #print(length)
-    #Average=sum(ProfitChange)/len(ProfitChange)
-    #print("The total Annual Profit Change is" + Average)
+    for j in Change:
+        length= length +1
+    Average=round(sum(Change)/len(Change),2)
+
+    print("Average Change: $" + str(Average))
 
 #Find the greatest increase in the list
-    MaxIncrease=[ProfitChange[i+1]+ProfitChange[i] for i in range (len(ProfitChange)-1)]
+    
+    MaxIncrease=max(Change)
+    for change in combined:
+        if change==MaxIncrease:
+            print(Date_Change)
 
-    print(f"The Greatest Increase is :{ MaxIncrease}")
+   
+#Find the date of the greatest increase
+   
+
+    print(f"The Greatest Increase in Profits: (${ MaxIncrease})")
 
 #Find the greatest decrease
-    MinChange=ProfitChange[0]
-    for i in ProfitChange:
-        if i < MinChange:
-            i=MinChange
-    print(f"The Greatest decrease in : ({MinChange})")
+    MaxDecrease=min(Change)
+    print(f"The Greatest decrease in Profits: (${MaxDecrease})")
