@@ -39,7 +39,7 @@ with open(csvpath) as csvfile:
         Candidate_Dictionary[row[2]]+=1
     #print(Candidate_Dictionary)
 
-    Candidate_Percent = {key: round(val / rowcount*100,2) for key, val in Candidate_Dictionary.items()}
+    Candidate_Percent = {key: round(val / rowcount*100,3) for key, val in Candidate_Dictionary.items()}
     #print(Candidate_Percent)
     Winner = max(Candidate_Dictionary, key=Candidate_Dictionary.get)
     #print(Winner)
@@ -47,24 +47,32 @@ with open(csvpath) as csvfile:
 
     TotalVotes= "Total Votes: "+str(rowcount)  
 
+#Store candidate details in own variables
+ #Combined dictionary 
 
-Output_Text=(
-f'Election Results\n'
+combined=[]
+for k1,v1 in Candidate_Dictionary.items(): # the basic way
+    combined = {}   
+   
+    for k2,v2 in Candidate_Percent.items():
+        combined = k1+": "+str(v2)+"% "+"("+str(v1)+")"
+        v2+=1
+       
+
+Output_Text=(f'Election Results\n'
 f'-------------------------\n'
 f'Total Votes: {rowcount}\n'
 f'-------------------------\n'
-for k,v in Candidate_Dictionary
-    f'{k}: {Candidate_Percent}% ({v})\n'
-    
+f'{combined}\n'
 f'-------------------------\n'
 f'Winner: {Winner}\n'
-f'-------------------------')
+f'-------------------------') 
 
 print(Output_Text)
 
 #Write output to text file
-output_path=os.path.join("Analysis/PyPollOutput.txt")
+#output_path=os.path.join("Analysis/PyPollOutput.txt")
 
-with open(output_path,"w") as csvfile:
+#with open(output_path,"w") as csvfile:
 
-    csvfile.write(Output_Text)
+    #csvfile.write(Output_Text)
